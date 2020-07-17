@@ -1,0 +1,30 @@
+services:
+    action.task.create:
+        parent: core.action.abstract
+        class: Requestum\ApiBundle\Action\CreateAction
+        arguments:
+            - App\Entity\Task
+            - App\Form\TaskType
+        tags: ['controller.service_arguments']
+
+    action.task.list:
+        parent: core.action.abstract
+        class: Requestum\ApiBundle\Action\ListAction
+        arguments:
+            - App\Entity\Task
+        tags: ['controller.service_arguments']
+
+    action.task.move:
+        parent: core.action.abstract
+        class: Requestum\ApiBundle\Action\TransitAction
+        arguments:
+            - App\Entity\Task
+        calls:
+            - ['setOptions', [{
+                'transitions': ['created',
+                                'scheduled',
+                                'completed',
+                                'canceled'],
+                'access_attribute': 'transit'
+             }]]
+        tags: ['controller.service_arguments']

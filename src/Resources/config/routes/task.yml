@@ -1,0 +1,14 @@
+task.create:
+    path: /task
+    methods: POST
+    defaults: { _controller: action.task.create:executeAction }
+task.list:
+    path: /task
+    methods: GET
+    defaults: { _controller: action.task.list:executeAction }
+task.move:
+    path: /task/{id}/move
+    methods: PATCH
+    defaults: { _controller: action.task.move:executeAction }
+    requirements:
+        id: !php/const Ramsey\Uuid\Uuid::VALID_PATTERN

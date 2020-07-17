@@ -1,0 +1,25 @@
+framework:
+    workflows:
+        task:
+            type: 'state_machine'
+            supports:
+                - App\Entity\Task
+            marking_store:
+                type: 'single_state'
+                arguments:
+                    - 'status'
+            places:
+                - created
+                - scheduled
+                - completed
+                - canceled
+            transitions:
+                schedule:
+                    from: created
+                    to: scheduled
+                complete:
+                    from: scheduled
+                    to: completed
+                cancel:
+                    from: [created, scheduled]
+                    to: canceled
